@@ -588,6 +588,9 @@ namespace DAL {
       \return status  -- Status of the operation; returns \e false in case an
               error was encountered.
     */
+
+  public:
+
     template <class T>
       bool readData (T data[],
 		     HDF5Hyperslab &slab,
