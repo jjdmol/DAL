@@ -45,6 +45,8 @@ if (NOT PYTHON_FOUND)
       HINTS ${PYTHON_ROOT_DIR}
       PATHS
       /Library/Frameworks/Python.framework/Versions/${_pythonRelease}
+      /sw/Library/Frameworks/Python.framework/Versions/${_pythonRelease}
+      /opt/local/Library/Frameworks/Python.framework/Versions/${_pythonRelease}
       ${DAL_FIND_PATHS}
       PATH_SUFFIXES bin
       NO_DEFAULT_PATH
@@ -154,14 +156,14 @@ if (NOT PYTHON_FOUND)
   
   if (PYTHON_FOUND)
     if (NOT PYTHON_FIND_QUIETLY)
-      message (STATUS "Found components for PYTHON")
+      message (STATUS "[FindPython_DAL] Found components for Python.")
       message (STATUS "PYTHON_VERSION   = ${PYTHON_VERSION}"   )
       message (STATUS "PYTHON_INCLUDES  = ${PYTHON_INCLUDES}"  )
       message (STATUS "PYTHON_LIBRARIES = ${PYTHON_LIBRARIES}" )
     endif (NOT PYTHON_FIND_QUIETLY)
   else (PYTHON_FOUND)
     if (PYTHON_FIND_REQUIRED)
-      message (FATAL_ERROR "Could not find PYTHON!")
+      message (FATAL_ERROR "[FindPython_DAL] Could not find Python!")
     endif (PYTHON_FIND_REQUIRED)
   endif (PYTHON_FOUND)
   

@@ -44,7 +44,7 @@ namespace DAL { // Namespace DAL -- begin
     \param filetype            -- Marker for the contents of the file
   */
   Filename::Filename (std::string const &observationID,
-		      FileType const &filetype)
+		      Type const &filetype)
   {
     init ();
     setObservationID (observationID);
@@ -61,8 +61,8 @@ namespace DAL { // Namespace DAL -- begin
     \param path                -- Path to the location of the file
   */
   Filename::Filename (std::string const &observationID,
-		      FileType const &filetype,
-		      FileExtension const &extension,
+		      Type const &filetype,
+		      Extension const &extension,
 		      std::string const &path)
   {
     init ();
@@ -84,8 +84,8 @@ namespace DAL { // Namespace DAL -- begin
    */
   Filename::Filename (std::string const &observationID,
 		      std::string const &optionalDescription,
-		      FileType const &filetype,
-		      FileExtension const &extension,
+		      Type const &filetype,
+		      Extension const &extension,
 		      std::string const &path)
   {
     init ();
@@ -258,9 +258,9 @@ namespace DAL { // Namespace DAL -- begin
   //_____________________________________________________________________________
   //                                                                 extensionMap
 
-  std::map<Filename::FileExtension,std::string> Filename::extensionMap ()
+  std::map<Filename::Extension,std::string> Filename::extensionMap ()
   {
-    std::map<Filename::FileExtension,std::string> extensions;
+    std::map<Filename::Extension,std::string> extensions;
 
     extensions[Filename::MS]     = "MS";
     extensions[Filename::h5]     = "h5";
@@ -282,11 +282,11 @@ namespace DAL { // Namespace DAL -- begin
   //_____________________________________________________________________________
   //                                                               extensionTypes
 
-  std::vector<Filename::FileExtension> Filename::extensionTypes ()
+  std::vector<Filename::Extension> Filename::extensionTypes ()
   {
-    std::vector<Filename::FileExtension> result;
-    std::map<Filename::FileExtension,std::string> extensions = extensionMap();
-    std::map<Filename::FileExtension,std::string>::iterator it;
+    std::vector<Filename::Extension> result;
+    std::map<Filename::Extension,std::string> extensions = extensionMap();
+    std::map<Filename::Extension,std::string>::iterator it;
 
     for (it=extensions.begin(); it!=extensions.end(); ++it) {
       result.push_back(it->first);
@@ -301,8 +301,8 @@ namespace DAL { // Namespace DAL -- begin
   std::vector<std::string> Filename::extensionNames ()
   {
     std::vector<std::string> result;
-    std::map<Filename::FileExtension,std::string> extensions = extensionMap();
-    std::map<Filename::FileExtension,std::string>::iterator it;
+    std::map<Filename::Extension,std::string> extensions = extensionMap();
+    std::map<Filename::Extension,std::string>::iterator it;
 
     for (it=extensions.begin(); it!=extensions.end(); ++it) {
       result.push_back(it->second);
@@ -318,10 +318,10 @@ namespace DAL { // Namespace DAL -- begin
     \param extension -- Extension (suffix) of the file.
     \return name     -- Extension (suffix) of the file.
    */
-  std::string Filename::getName (Filename::FileExtension const &extension)
+  std::string Filename::getName (Filename::Extension const &extension)
   {
-    std::map<Filename::FileExtension,std::string> extensions = extensionMap();
-    std::map<Filename::FileExtension,std::string>::iterator it;
+    std::map<Filename::Extension,std::string> extensions = extensionMap();
+    std::map<Filename::Extension,std::string>::iterator it;
 
     it = extensions.find(extension);
 
@@ -335,9 +335,9 @@ namespace DAL { // Namespace DAL -- begin
   //_____________________________________________________________________________
   //                                                                  filetypeMap
   
-  std::map<Filename::FileType,std::string> Filename::filetypeMap ()
+  std::map<Filename::Type,std::string> Filename::filetypeMap ()
   {
-    std::map<Filename::FileType,std::string> filetype;
+    std::map<Filename::Type,std::string> filetype;
 
     filetype[Filename::uv]      = "uv";
     filetype[Filename::sky]     = "sky";
@@ -353,11 +353,11 @@ namespace DAL { // Namespace DAL -- begin
   //_____________________________________________________________________________
   //                                                                filetypeTypes
   
-  std::vector<Filename::FileType> Filename::filetypeTypes ()
+  std::vector<Filename::Type> Filename::filetypeTypes ()
   {
-    std::vector<Filename::FileType> result;
-    std::map<Filename::FileType,std::string> filetypes = filetypeMap();
-    std::map<Filename::FileType,std::string>::iterator it;
+    std::vector<Filename::Type> result;
+    std::map<Filename::Type,std::string> filetypes = filetypeMap();
+    std::map<Filename::Type,std::string>::iterator it;
     
     for (it=filetypes.begin(); it!=filetypes.end(); ++it) {
       result.push_back(it->first);
@@ -372,8 +372,8 @@ namespace DAL { // Namespace DAL -- begin
   std::vector<std::string> Filename::filetypeNames ()
   {
     std::vector<std::string> result;
-    std::map<Filename::FileType,std::string> filetypes = filetypeMap();
-    std::map<Filename::FileType,std::string>::iterator it;
+    std::map<Filename::Type,std::string> filetypes = filetypeMap();
+    std::map<Filename::Type,std::string>::iterator it;
     
     for (it=filetypes.begin(); it!=filetypes.end(); ++it) {
       result.push_back(it->second);
@@ -389,10 +389,10 @@ namespace DAL { // Namespace DAL -- begin
     \param filetype -- Marker for the contents of the file.
     \return name    -- The marker for the contents of the file as string.
    */
-  std::string Filename::getName (Filename::FileType const &filetype)
+  std::string Filename::getName (Filename::Type const &filetype)
   {
-    std::map<Filename::FileType,std::string> filetypes = filetypeMap();
-    std::map<Filename::FileType,std::string>::iterator it;
+    std::map<Filename::Type,std::string> filetypes = filetypeMap();
+    std::map<Filename::Type,std::string>::iterator it;
     
     it = filetypes.find(filetype);
     

@@ -33,7 +33,6 @@
 #include "pydal.h"
 
 using DAL::CommonAttributes;
-using DAL::CommonAttributesObservation;
 using DAL::Filename;
 using DAL::HDF5Hyperslab;
 using DAL::SAS_Settings;
@@ -46,7 +45,8 @@ void export_CommonAttributes ()
 {
   bpl::class_<CommonAttributes>("CommonAttributes")
     .def( bpl::init<>())
-    .def( bpl::init<Filename,string,string>())
+    .def( bpl::init<Filename>())
+    .def( bpl::init<Filename,string>())
     .def( "groupType", &CommonAttributes::groupType,
 	  "Get the LOFAR group type.")
     .def( "filename", &CommonAttributes::filename,
@@ -55,8 +55,6 @@ void export_CommonAttributes ()
 	  "Set the name of the file.")
     .def( "filetype", &CommonAttributes::filetype,
 	  "Get the type of the file.")
-    .def( "setFiletype", &CommonAttributes::setFiletype,
-	  "Set the type of the file.")
     .def( "filedate", &CommonAttributes::filedate,
 	  "Get the file creation date.")
     .def( "setFiledate", &CommonAttributes::setFiledate,
@@ -85,66 +83,53 @@ void export_CommonAttributes ()
 	  "Get names/Email-addresses of the project's primary contact person(s)")
     .def( "setProjectContact", &CommonAttributes::setProjectContact,
 	  "Set names/Email-addresses of the project's primary contact person(s)")
-    ;
-}
-
-//_______________________________________________________________________________
-//                                                    CommonAttributesObservation
-
-void export_CommonAttributesObservation () 
-{
-  bpl::class_<CommonAttributesObservation>("CommonAttributesObservation")
-    .def( bpl::init<>())
-    .def( bpl::init<CommonAttributesObservation>())
-    .def( "observationID", &CommonAttributesObservation::observationID,
+    .def( "observationID", &CommonAttributes::observationID,
 	  "Get unique identifier for the observation")
-    .def( "setObservationID", &CommonAttributesObservation::setObservationID,
-	  "Set unique identifier for the observation")
-    .def( "startMJD", &CommonAttributesObservation::startMJD,
+    .def( "startMJD", &CommonAttributes::startMJD,
 	  "Get start date of the observation (MJD)")
-    .def( "setStartMJD", &CommonAttributesObservation::setStartMJD,
+    .def( "setStartMJD", &CommonAttributes::setStartMJD,
 	  "Set start date of the observation (MJD)")
-    .def( "startTAI", &CommonAttributesObservation::startTAI,
+    .def( "startTAI", &CommonAttributes::startTAI,
 	  "Get start date of the observation (TAI)")
-    .def( "setStartTAI", &CommonAttributesObservation::setStartTAI,
+    .def( "setStartTAI", &CommonAttributes::setStartTAI,
 	  "Set start date of the observation (TAI)")
-    .def( "startUTC", &CommonAttributesObservation::startUTC,
+    .def( "startUTC", &CommonAttributes::startUTC,
 	  "Get start date of the observation (UTC)")
-    .def( "setStartUTC", &CommonAttributesObservation::setStartUTC,
+    .def( "setStartUTC", &CommonAttributes::setStartUTC,
 	  "Set start date of the observation (UTC)")
-    .def( "endMJD", &CommonAttributesObservation::endMJD,
+    .def( "endMJD", &CommonAttributes::endMJD,
 	  "Get end date of the observation (MJD)")
-    .def( "setEndMJD", &CommonAttributesObservation::setEndMJD,
+    .def( "setEndMJD", &CommonAttributes::setEndMJD,
 	  "Set end date of the observation (MJD)")
-    .def( "endTAI", &CommonAttributesObservation::endTAI,
+    .def( "endTAI", &CommonAttributes::endTAI,
 	  "Get end date of the observation (TAI)")
-    .def( "setEndTAI", &CommonAttributesObservation::setEndTAI,
+    .def( "setEndTAI", &CommonAttributes::setEndTAI,
 	  "Set end date of the observation (TAI)")
-    .def( "endUTC", &CommonAttributesObservation::endUTC,
+    .def( "endUTC", &CommonAttributes::endUTC,
 	  "Get end date of the observation (UTC)")
-    .def( "setEndUTC", &CommonAttributesObservation::setEndUTC,
+    .def( "setEndUTC", &CommonAttributes::setEndUTC,
 	  "Set end date of the observation (UTC)")
-    .def( "nofStations", &CommonAttributesObservation::nofStations,
+    .def( "nofStations", &CommonAttributes::nofStations,
 	  "nof. stations used during the observation")
-    .def( "stationsList", &CommonAttributesObservation::stationsList,
+    .def( "stationsList", &CommonAttributes::stationsList,
 	  "Get list of stations used during the observation")
-    .def( "setStationsList", &CommonAttributesObservation::setStationsList,
+    .def( "setStationsList", &CommonAttributes::setStationsList,
 	  "Set list of stations used during the observation")
-    .def( "frequencyMin", &CommonAttributesObservation::frequencyMin,
+    .def( "frequencyMin", &CommonAttributes::frequencyMin,
 	  "Observation minimum frequency")
-    .def( "setFrequencyMin", &CommonAttributesObservation::setFrequencyMin,
+    .def( "setFrequencyMin", &CommonAttributes::setFrequencyMin,
 	  "Set observation minimum frequency")
-    .def( "frequencyMax", &CommonAttributesObservation::frequencyMax,
+    .def( "frequencyMax", &CommonAttributes::frequencyMax,
 	  "Observation maximum frequency")
-    .def( "setFrequencyMax", &CommonAttributesObservation::setFrequencyMax,
+    .def( "setFrequencyMax", &CommonAttributes::setFrequencyMax,
 	  "Set observation maximum frequency")
-    .def( "frequencyCenter", &CommonAttributesObservation::frequencyCenter,
+    .def( "frequencyCenter", &CommonAttributes::frequencyCenter,
 	  "Observation center frequency")
-    .def( "setFrequencyCenter", &CommonAttributesObservation::setFrequencyCenter,
+    .def( "setFrequencyCenter", &CommonAttributes::setFrequencyCenter,
 	  "Set observation center frequency")
-    .def( "frequencyUnit", &CommonAttributesObservation::frequencyUnit,
+    .def( "frequencyUnit", &CommonAttributes::frequencyUnit,
 	  "Observation frequency physical units")
-    .def( "setFrequencyUnit", &CommonAttributesObservation::setFrequencyUnit,
+    .def( "setFrequencyUnit", &CommonAttributes::setFrequencyUnit,
 	  "Set observation frequency physical units")
     ;
 }
@@ -155,7 +140,7 @@ void export_CommonAttributesObservation ()
 void export_Filename ()
 {
   /* Enumeration: File type */
-  bpl::enum_<Filename::FileType>("FileType")
+  bpl::enum_<Filename::Type>("Type")
     .value("uv",Filename::uv)
     .value("sky",Filename::sky)
     .value("rm",Filename::rm)
@@ -166,7 +151,7 @@ void export_Filename ()
     ;
   
   /* Enumeration: File extension */
-  bpl::enum_<Filename::FileExtension>("FileExtension")
+  bpl::enum_<Filename::Extension>("Extension")
     .value("MS",Filename::MS)
     .value("h5",Filename::h5)
     .value("fits",Filename::fits)
@@ -188,7 +173,7 @@ void export_Filename ()
   bpl::class_<Filename>("Filename")
     // Construction
     .def( bpl::init<>())
-    .def( bpl::init<string,string,Filename::FileType,Filename::FileExtension>())
+    .def( bpl::init<string,string,Filename::Type,Filename::Extension>())
     // Parameters
     .def( "observationID", &Filename::observationID,
 	  "Get the unique observation ID.")

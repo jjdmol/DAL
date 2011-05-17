@@ -17,8 +17,6 @@
 //#  You should have received a copy of the GNU General Public License
 //#  along with this program; if not, write to the Free Software
 //#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-//#
-//#  $Id: $
 
 #ifdef DAL_WITH_LOFAR
 #include <lofar_config.h>
@@ -32,16 +30,37 @@
 #include <data_common/CommonAttributes.h>
 #include <data_hl/BF_RootGroup.h>
 #include <data_hl/BF_StokesDataset.h>
+
 #include <iostream>
-
-#include <data_common/CommonAttributes.h>
-
 #include <boost/format.hpp>
 #include <boost/multi_array.hpp>
 
 using namespace std;
 using namespace boost;
 using boost::format;
+
+//_______________________________________________________________________________
+//                                                            setCommonAttributes
+
+int setCommonAttributes (DAL::Filename const &filename)
+{
+  int nofFailedTests = 0;
+
+  DAL::CommonAttributes attributes (filename);
+
+  attributes.setTelescope      ("LOFAR");
+  attributes.setObserver       ("Pulsar observer");
+  attributes.setProjectID      ("Pulsar");
+  attributes.setProjectTitle   ("Pulsar survey");
+  attributes.setProjectPI      ("Mr. Pulsar");
+  attributes.setProjectCoI     ("Mrs. Pulsar");
+  attributes.setProjectContact ("pulsar@lofar.org");
+
+  return nofFailedTests;
+}
+
+//_______________________________________________________________________________
+//                                                                           main
 
 int main()
 {
@@ -51,7 +70,8 @@ int main()
     matching the rules as  defined in ICD-005.
   */
 
-  DAL::Filename filename ("",
+  std::string observationID ("1234567890");
+  DAL::Filename filename (observationID,
 			  "test",
 			  DAL::Filename::bf,
 			  DAL::Filename::h5);
@@ -60,23 +80,18 @@ int main()
   const unsigned nrChannels = SUBBANDS * CHANNELS;
   
   /*__________________________________________________________________
-    Create new BF file.
+    Create new BF file with basic structure.
   */
 
-  std::cout << "[1] Create basic BF file structure ..." << std::endl;
-  {
-    cout << "-- Creating file " << filename.filename() << endl;
-    DAL::BF_RootGroup rootGroup (filename);
-    
-    cout << "-- Creating primary pointing 0" << endl;
-    rootGroup.openPrimaryPointing ( 0, true );
-
-    cout << "-- Creating tied-array beam 0" << endl;
-    rootGroup.openBeam ( 0, 0, true );
-
-    cout << "-- Closing file" << endl;
-  }
-
+  std::cout << "[1] Creating new file " << filename.filename() << endl;
+  DAL::BF_RootGroup rootGroup (filename);
+  
+  // cout << "-- Creating primary pointing 0" << endl;
+  // rootGroup.openPrimaryPointing ( 0, true );
+  
+  // cout << "-- Creating tied-array beam 0" << endl;
+  // rootGroup.openBeam ( 0, 0, true );
+  
   return 0;
 
   /*__________________________________________________________________

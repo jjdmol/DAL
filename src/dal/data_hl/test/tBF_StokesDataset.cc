@@ -397,7 +397,7 @@ int test_constructors (hid_t const &fileID)
 
   cout << "[6] Testing BF_StokesDataset(hid_t,string,uint,vector<uint>,Stokes::Component) ..." << endl;
   try {
-    vector<unsigned int> channels (nofSubbands);
+    std::vector<unsigned int> channels (nofSubbands);
     index       = 6;
     nameDataset = BF_StokesDataset::getName(index);
 
@@ -767,7 +767,7 @@ int main ()
     // Test for the constructor(s)
     nofFailedTests += test_constructors (fileID);
     // // Test access to the attributes
-    // nofFailedTests += test_attributes (fileID);
+    nofFailedTests += test_attributes (fileID);
     // Test read/write access to the data
     // nofFailedTests += test_data (fileID);
 

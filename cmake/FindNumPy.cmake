@@ -26,35 +26,52 @@
 
 if (NOT NUMPY_FOUND)
 
+  ## Initialize variables
+
+  unset (NUMPY_FOUND)
+  unset (NUMPY_INCLUDES)
+
+  ##_____________________________________________________________________________
+  ## Check for installation of Python
+
   if (NOT PYTHON_FOUND)
     set (PYTHON_FIND_QUIETLY ${NUMPY_FIND_QUIETLY})
     include (FindPython_DAL)
   endif (NOT PYTHON_FOUND)
 
-  set (NUMPY_FOUND FALSE)
-  set (NUMPY_INCLUDES "")
+  ##_____________________________________________________________________________
+  ## Search for header files
 
   if (PYTHON_EXECUTABLE)
-    execute_process(
-      COMMAND ${PYTHON_EXECUTABLE} -c import\ numpy\;\ print\ numpy.get_include\(\)
-      RESULT_VARIABLE NUMPY_FIND_ERROR
-      OUTPUT_VARIABLE NUMPY_INCLUDES
+    ## Use Python to determine the include directory
+    execute_process (
+      COMMAND ${PYTHON_EXECUTABLE} -c import\ numpy\;\ print\ numpy.get_include\(\)\;
+      ERROR_VARIABLE NUMPY_FIND_ERROR
+      RESULT_VARIABLE NUMPY_FIND_RESULT
+      OUTPUT_VARIABLE NUMPY_FIND_OUTPUT
       OUTPUT_STRIP_TRAILING_WHITESPACE
-    )
+      )
+    ## process the output from the execution of the command
+    if (NOT NUMPY_FIND_RESULT)
+      set (NUMPY_INCLUDES ${NUMPY_FIND_OUTPUT})
+    endif (NOT NUMPY_FIND_RESULT)
   endif (PYTHON_EXECUTABLE)
+  
+  ##_____________________________________________________________________________
+  ## Actions taken after completing the search
 
-  if (NOT NUMPY_FIND_ERROR)
+  if (NUMPY_INCLUDES)
     set (NUMPY_FOUND TRUE)
     if (NOT NUMPY_FIND_QUIETLY)
-      message (STATUS "Found components for NumPy")
+      message (STATUS "[FindNumPy] Found components for NumPy")
       message (STATUS "NUMPY_INCLUDES  = ${NUMPY_INCLUDES}")
     endif (NOT NUMPY_FIND_QUIETLY)
-  else (NOT NUMPY_FIND_ERROR)
+  else (NUMPY_INCLUDES)
     set (NUMPY_FOUND FALSE)
     if (NOT NUMPY_FIND_QUIETLY)
-      message (FATAL_ERROR "Attempt to import NumPy failed!")
+      message (FATAL_ERROR "[FindNumPy] Attempt to import NumPy failed!")
     endif (NOT NUMPY_FIND_QUIETLY)
-  endif (NOT NUMPY_FIND_ERROR)
+  endif (NUMPY_INCLUDES)
 
   ##_____________________________________________________________________________
   ## Mark advanced variables

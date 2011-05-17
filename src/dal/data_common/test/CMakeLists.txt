@@ -40,12 +40,11 @@ add_test (tFilename tFilename)
 add_test (tCommonAttributes tCommonAttributes)
 add_test (tSAS_Settings tSAS_Settings)
 add_test (tHDF5Hyperslab tHDF5Hyperslab)
-add_test (tHDF5Dataset tHDF5Dataset)
 
 if (H5DUMP_EXECUTABLE)
   add_test (tCommonAttributes_h5dump ${H5DUMP_EXECUTABLE} tCommonAttributes.h5)
 endif (H5DUMP_EXECUTABLE)
 
 if (H5LS_EXECUTABLE)
-  add_test (tHDF5Dataset_h5ls ${H5LS_EXECUTABLE} -f -r tHDF5Dataset.h5)
+  add_test (tCommonAttributes_h5ls ${H5LS_EXECUTABLE} tCommonAttributes.h5)
 endif (H5LS_EXECUTABLE)
